@@ -74,8 +74,7 @@ product_items = []
 # Plot evoked response for each condition
 evokeds = []
 titles = []
-
-for condition_name, condition_id in sorted(conditions.items(), key=lambda x: x[1]):
+for idx, (condition_name, condition_id) in enumerate(sorted(conditions.items(), key=lambda x: x[1])):
     print(f"Processing condition: {condition_name}")
     
     # Extract epochs for this condition
@@ -100,8 +99,11 @@ for condition_name, condition_id in sorted(conditions.items(), key=lambda x: x[1
     fig_path = op.join('out_figs', fig_name)
     fig_base64 = save_figure_with_base64(fig, fig_path, dpi_file=150, dpi_base64=80)
     
-    # Add to product
-    add_image_to_product(product_items, fig_name, base64_data=fig_base64)
+    if idx < 6:  # Add first 6 conditions to report for visualization
+        # add to product
+        add_image_to_product(product_items, fig_name, base64_data=fig_base64)
+    else:
+        print(f"  Note: Condition {condition_name} has been saved but not added here due to file size limits. Check out_figs/ for all condition plots.")
     
     print(f"  Saved: {fig_name} ({len(condition_epochs)} epochs averaged)")
 
