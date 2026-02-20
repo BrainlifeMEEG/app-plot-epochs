@@ -38,7 +38,8 @@ from brainlife_utils import (
     ensure_output_dirs,
     create_product_json,
     add_info_to_product,
-    add_image_to_product
+    add_image_to_product,
+    save_figure_with_base64
 )
 
 # Set up matplotlib for headless execution
@@ -97,11 +98,10 @@ for condition_name, condition_id in sorted(conditions.items(), key=lambda x: x[1
     # Save figure
     fig_name = f"erp_{condition_name.replace('/', '_').replace(' ', '_')}.png"
     fig_path = op.join('out_figs', fig_name)
-    fig.savefig(fig_path, dpi=100, bbox_inches='tight')
-    plt.close(fig)
+    fig_base64 = save_figure_with_base64(fig, fig_path)
     
     # Add to product
-    add_image_to_product(product_items, fig_path, fig_name)
+    add_image_to_product(product_items, fig_name, base64_data=fig_base64)
     
     print(f"  Saved: {fig_name} ({len(condition_epochs)} epochs averaged)")
 
