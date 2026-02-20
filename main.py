@@ -98,7 +98,7 @@ for condition_name, condition_id in sorted(conditions.items(), key=lambda x: x[1
     # Save figure
     fig_name = f"erp_{condition_name.replace('/', '_').replace(' ', '_')}.png"
     fig_path = op.join('out_figs', fig_name)
-    fig_base64 = save_figure_with_base64(fig, fig_path)
+    fig_base64 = save_figure_with_base64(fig, fig_path, dpi_file=150, dpi_base64=80)
     
     # Add to product
     add_image_to_product(product_items, fig_name, base64_data=fig_base64)
