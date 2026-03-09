@@ -74,6 +74,7 @@ product_items = []
 # Plot evoked response for each condition
 evokeds = []
 titles = []
+skipped_conds = 0
 for idx, (condition_name, condition_id) in enumerate(sorted(conditions.items(), key=lambda x: x[1])):
     print(f"Processing condition: {condition_name}")
     
@@ -103,6 +104,7 @@ for idx, (condition_name, condition_id) in enumerate(sorted(conditions.items(), 
         # add to product
         add_image_to_product(product_items, fig_name, base64_data=fig_base64)
     else:
+        skipped_conds += 1
         print(f"  Note: Condition {condition_name} has been saved but not added here due to file size limits. Check out_figs/ for all condition plots.")
     
     print(f"  Saved: {fig_name} ({len(condition_epochs)} epochs averaged)")
@@ -113,6 +115,7 @@ add_info_to_product(product_items, f"Processed {len(epochs)} epochs")
 add_info_to_product(product_items, f"Conditions: {', '.join(titles)}")
 add_info_to_product(product_items, f"Channels: {len(epochs.ch_names)}")
 add_info_to_product(product_items, f"Sampling rate: {epochs.info['sfreq']} Hz")
+add_info_to_product(product_items, f"{skipped_conds} conditions skipped in pictures below due to file size limits (see out_figs/).", msg_type='warning')
 
 # == GENERATE HTML REPORT ==
 if evokeds:
