@@ -92,7 +92,7 @@ for idx, (condition_name, condition_id) in enumerate(sorted(conditions.items(), 
     titles.append(condition_name)
     
     # Create figure for this condition
-    fig = evoked.plot(spatial_colors=True, show=False)
+    fig = evoked.plot_joint(spatial_colors=True, show=False)
     fig.suptitle(f'Average ERP - {condition_name}', fontsize=14, fontweight='bold')
     
     # Save figure
